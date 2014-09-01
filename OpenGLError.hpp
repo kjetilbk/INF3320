@@ -6,13 +6,6 @@
 //  Copyright (c) 2014 Kjetil Kristoffersen. All rights reserved.
 //
 
-#ifndef kjetilbk_1_OpenGLError_hpp
-#define kjetilbk_1_OpenGLError_hpp
-
-
-
-#endif
-
 /* $Id: OpenGLError.hpp, v1.2 2011/09/05$
  *
  * Author: Atgeirr F Rasmussen, <atgeirr@sintef.no>
@@ -110,7 +103,7 @@ protected:
  *     return 0;
  * }
  */
-#ifdef __APPLE__
+
 #define CHECK_OPENGL \
 do { \
 GLenum error = glGetError(); \
@@ -119,4 +112,3 @@ throw opengl_error(error, __FILE__, __LINE__); \
 } while (0)
 
 #endif  // OPENGL_ERROR_H_
-#endif

@@ -50,7 +50,7 @@ LD       := g++
 SOURCES  := $(wildcard *.cpp)
 OBJECTS  := $(patsubst %.cpp, %.o, $(SOURCES))
 
-CXXFLAGS := $(CXXFLAGS) -Wall -pedantic -g2 -DDEBUG -l$(HOME)/INF3320/include
+CXXFLAGS := $(CXXFLAGS) -Wall -pedantic -g2 -DDEBUG -I$(HOME)/INF3320/include -I./
 LDFLAGS  := $(LDFLAGS) -lm -lGL -L/usr/X11R6/lib -lGLU -lglut -lGLEW -lXi -lXmu -L$(HOME)/INF3320/lib --rpath=$(HOME)/INF3320/lib
 
 .PHONY: all depend clean

@@ -21,7 +21,6 @@
 #include <vector>
 
 #include <GL/glew.h>
-#include <OpenGL/gl3.h>
 #include <GL/freeglut.h>
 
 
@@ -47,6 +46,7 @@ struct Vertex {
 // Global variables
 static std::vector<Vertex> vertices;
 static std::vector<unsigned int> indices;
+static GLuint buffs[2];
 static int level = 0;
 
 // Vertex buffer object IDs
@@ -61,7 +61,7 @@ void pushTriangle(unsigned int a, unsigned int b, unsigned int c){
 
 void sierpinskiGasket(unsigned int a, unsigned int b, unsigned int c, unsigned int level) {
     if(level == 0) {
-        pushTriangle(a,b,c);
+        pushTriangle(c,b,a);
         // Generate new vertices and call this function recursively
         // ... insert your code here ...
         // ... end of your code ...
@@ -109,12 +109,17 @@ void rebuildGasket() {
 void bindDataToBuffers() {
     // Bind VBOs and provide data to them
     // ... insert your code here ...
+    glBindBuffer(GL_ARRAY_BUFFER, buffs[0]);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
+    glVertexPointer(2, GL_FLOAT, 0, 0);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffs[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(indices), indices.data(), GL_STATIC_DRAW);
     // ... end of your code ...
     
     // Unbind the VBO's after we are done
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    
     CHECK_OPENGL;
 }
 
@@ -125,7 +130,7 @@ void myInit()
     
     // Generate VBO ids
     // ... insert your code here ...
-
+    glGenBuffers(2, buffs);
     // ... end of your code ...
     
     // Bind data to buffers
@@ -143,7 +148,7 @@ void myKeyboard(unsigned char key, int /* x */, int /* y */)
         case '+':
             level++;
             // Rebuild gasket and bind data to buffers
-            // ... insert your code here ...
+            // ... insert your code here ...Vertex2f(vertices[indices[i]].position.x, vertices[indices[i]].position.y)
             rebuildGasket();
             // ... end of your code ...
             break;
@@ -174,15 +179,18 @@ void myDisplay()
     glLoadIdentity(); // (eye -> clip space)
     glFrustum(-1,1,-1,1,1,1000); // Perspective camera model
     
-    glBegin( GL_TRIANGLES); // Begin issuing a triangle
+    //glBegin( GL_TRIANGLES); // Begin issuing a triangle
     glColor3f(0, 1, 0); // Set color to green
 
     
-    for(int i = 0; i<indices.size(); i++){
-        glVertex2f(vertices[indices[i]].position.x, vertices[indices[i]].position.y);
-    }
+    //for(int i = 0; i<indices.size(); i++){
+    //    glVertex2f(vertices[indices[i]].position.x, vertices[indices[i]].position.y);
+    //}
 
-    glEnd(); // Finish issuing the polygon
+
+    //glEnd(); // Finish issuing the polygon
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffs[1]);
+    glDrawElements(GL_TRIANGLES, indices.size()/3, GL_UNSIGNED_INT,BUFFER_OFFSET(1));
     // ... end of your code ...
     
     // Switch the buffer
