@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Kjetil Kristoffersen. All rights reserved.
 //
 
-#include "oblig1_gasket.h"
-
 /* $Id: oblig1_gasket.cpp, v1.0 2011/09/07$
  *
  * Author: Bartlomiej Siwek, <bartloms@ifi.uio.no>
@@ -61,7 +59,7 @@ void pushTriangle(unsigned int a, unsigned int b, unsigned int c){
 
 void sierpinskiGasket(unsigned int a, unsigned int b, unsigned int c, unsigned int level) {
     if(level == 0) {
-        pushTriangle(c,b,a);
+        pushTriangle(a,b,c);
         // Generate new vertices and call this function recursively
         // ... insert your code here ...
         // ... end of your code ...
@@ -110,11 +108,11 @@ void bindDataToBuffers() {
     // Bind VBOs and provide data to them
     // ... insert your code here ...
     glBindBuffer(GL_ARRAY_BUFFER, buffs[0]);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*vertices.size(), vertices.data(), GL_STATIC_DRAW);
     glVertexPointer(2, GL_FLOAT, 0, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffs[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(indices), indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
     // ... end of your code ...
     
     // Unbind the VBO's after we are done
@@ -148,8 +146,9 @@ void myKeyboard(unsigned char key, int /* x */, int /* y */)
         case '+':
             level++;
             // Rebuild gasket and bind data to buffers
-            // ... insert your code here ...Vertex2f(vertices[indices[i]].position.x, vertices[indices[i]].position.y)
+            // ... insert your code here ...
             rebuildGasket();
+			bindDataToBuffers();
             // ... end of your code ...
             break;
         case '-':
@@ -157,6 +156,7 @@ void myKeyboard(unsigned char key, int /* x */, int /* y */)
             // Rebuild gasket and bind data to buffers
             // ... insert your code here ...
             rebuildGasket();
+			bindDataToBuffers();
             // ... end of your code ...
             break;
     }
@@ -171,26 +171,11 @@ void myDisplay()
     
     // Bind VBO's and call a drawing function
     // ... insert your code here ...
-    glMatrixMode( GL_MODELVIEW); // Model view transformation
-    glLoadIdentity(); // (model -> eye space)
-    glTranslatef(0, 0, -1); // A simple translation
-    
-    glMatrixMode( GL_PROJECTION); // Projection transformation
-    glLoadIdentity(); // (eye -> clip space)
-    glFrustum(-1,1,-1,1,1,1000); // Perspective camera model
-    
-    //glBegin( GL_TRIANGLES); // Begin issuing a triangle
+
     glColor3f(0, 1, 0); // Set color to green
 
-    
-    //for(int i = 0; i<indices.size(); i++){
-    //    glVertex2f(vertices[indices[i]].position.x, vertices[indices[i]].position.y);
-    //}
-
-
-    //glEnd(); // Finish issuing the polygon
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffs[1]);
-    glDrawElements(GL_TRIANGLES, indices.size()/3, GL_UNSIGNED_INT,BUFFER_OFFSET(1));
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, BUFFER_OFFSET(0));
     // ... end of your code ...
     
     // Switch the buffer
@@ -210,11 +195,7 @@ int main(int argc, char **argv)
 {
     // Initialization of GLUT
     glutInit(&argc, argv);
-#ifndef __APPLE__
     glutInitContextVersion(3, 1);
-#else
-    glutInitContextVersion(2,1);
-#endif
     glutInitContextFlags(GLUT_DEBUG);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(512, 512);
