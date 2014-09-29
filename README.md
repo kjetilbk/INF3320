@@ -15,4 +15,4 @@ Har ikke kommentert stort her fordi det alt var dokumentert fra obligmakers side
 
 Oblig 2
 =======
-Litt samme hva kommentarer angår - jeg tror jeg kan ha gjort noe galt hva kvaternionene angår. Roterer den normalt på det den egentlig skal? Litt usikker om det er ganginga av kvaternionen eller koordinatene her!
+Litt samme hva kommentarer angår - tror koden skal lese seg selv med de kommentarene som alt er der. Tror også rotering fungerer som det skal, men hadde masse problemer med rekkefølgen av multiplikasjonene samt hvor kameraet skulle stå for at retningen ble riktig(OpenGLs negative z-koordinater etc.). Tror det ble riktig til slutt, men har fått litt tunnellsyn på roterende firkanter etter alle timene jeg stirret, så er jeg er ikke sikker! 
