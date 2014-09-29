@@ -67,8 +67,8 @@ namespace GfxUtil {
 		// skip
 		// handle mouse motion while one of the mouse buttons is down
 		m_rotation_mousepos_c = getPointOnUnitSphere(glm::vec2(x, y));
-		glm::fquat t = getGreatCircleRotation(m_rotation_mousepos_i, m_rotation_mousepos_c);
-		m_camera_orientation = t*m_rotation_orientation_i;
+		glm::fquat t = getGreatCircleRotation(m_rotation_mousepos_c, m_rotation_mousepos_i);
+		m_camera_orientation = m_rotation_orientation_i*t;
 		// unskip
 	}
 
@@ -83,15 +83,18 @@ namespace GfxUtil {
 		return result;
 	}
 
+	glm::vec3 multiplyWithQuat(glm::vec3 vec, glm::fquat quat){
+		return quat*vec;
+	}
+
 	glm::mat4x4 SimpleViewer::getModelViewMatrix() {
 		glm::mat4x4 result;
 
 		// skip 
 		// compute modelview matrix (a rotation should be preceded by a translation of the camera)...
-		glm::vec3 cameraPos = glm::vec3(2.0f, 2.0f, 2.0f);
-		cameraPos = m_camera_orientation*cameraPos*glm::inverse(m_camera_orientation);
-		glm::vec3 lookingAt = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::vec3 upVec = glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::vec3 cameraPos = multiplyWithQuat(glm::vec3(0.0f, 0.0f, 3.0f), m_camera_orientation);
+		glm::vec3 lookingAt = multiplyWithQuat(glm::vec3(0.0f, 0.0f, 0.0f), m_camera_orientation);
+		glm::vec3 upVec = multiplyWithQuat(glm::vec3(0.0f, 1.0f, 0.0f), m_camera_orientation);
 		result = glm::lookAt(cameraPos, lookingAt, upVec);
 		// unskip
 
