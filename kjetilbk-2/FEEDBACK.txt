@@ -1,0 +1,7 @@
+Feedback - Obligatory assignment 2 - INF3320
+Student: kjetilbk
+Status: Approved
+--------------------------------------------
+Program compiles and runs like expected.
+
+The reason why you may think the view looks weird is because the field of view is very large. Usually we use values like 45.0f and 60.0f here. 
