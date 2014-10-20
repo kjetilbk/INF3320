@@ -51,19 +51,21 @@ void main() {
   vec3 difMat = gl_FrontMaterial.diffuse.xyz;
   vec3 specMat = gl_FrontMaterial.specular.xyz;
 
-  vec3 l = gl_FragCoord.xyz - gl_LightSource[0].position.xyz;
+  vec3 l = gl_LightSource[0].position.xyz - VSPosition;
   vec3 lightVec = normalize(l);
+  //vec3 lightVec = gl_LightSource[0].spotDirection;
   vec3 normalVec = normalize(Normal);
-  vec3 eyeVec = normalize(VSPosition.xyz - vec3(0.0, 0.0, 3.0));
+  vec3 eyeVec = normalize(vec3(0.0, 0.0, 3.0) - VSPosition.xyz);
   vec3 halfVec = normalize(lightVec + eyeVec);
+  //vec3 halfVec = gl_LightSource[0].halfVector.xyz;
 
   // calculate diffuse component
-  vec3 diffuse = max(dot(normalVec, lightVec), 0.0) * difMat;
+  vec3 diffuse = vec3(max(dot(lightVec, normalVec), 0.0));
 
   //calculate specular component
   vec3 s = vec3(max(dot(normalVec, halfVec), 0.0));
-  vec3 specular = pow(s, vec3(32.0)) * specMat;
+  vec3 specular = pow(s, vec3(16.0));
 
-  //combine diffuse and specular contributions
+  //combine diffuse and specular contributions  
   gl_FragColor.rgb = diffuse + specular;
 }

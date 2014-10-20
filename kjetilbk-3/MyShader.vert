@@ -11,7 +11,7 @@ void main() {
   // Transform the vertex position to view space for fragment sahder
   // Transform the normal to view space for fragment sahder (remeber the matrix!)
   // Pass on the texture coordinates
-  Normal = gl_NormalMatrix * gl_Normal;
+  Normal = gl_NormalMatrix*gl_Normal;
   gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
   VSPosition = vec3(gl_Position);
 }

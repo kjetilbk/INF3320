@@ -63,7 +63,7 @@ void SimpleViewer::motion(int x, int y) {
 glm::mat4x4 SimpleViewer::getProjectionMatrix() {
 	glm::mat4x4 result;
 // skip
-	result = glm::perspective(90.0f, 1.0f, 0.01f, 100.0f);
+	result = glm::perspective(60.0f, m_window_aspect, 0.01f, 100.0f);
 // compute projection matrix...
 // unskip
 	return result;
@@ -76,7 +76,7 @@ glm::mat4x4 SimpleViewer::getModelViewMatrix() {
 // skip
 // compute modelview matrix (a rotation should be preceded by a translation of the camera)...
 	glm::vec3 cameraPos = multiplyWithQuat(glm::vec3(0.0f, 0.0f, 3.0f), m_camera_orientation);
-	glm::vec3 lookingAt = multiplyWithQuat(glm::vec3(0.0f, 0.0f, 0.0f), m_camera_orientation);
+	glm::vec3 lookingAt = multiplyWithQuat(glm::vec3(0.0f, 0.0f, 2.0f), m_camera_orientation);
 	glm::vec3 upVec = multiplyWithQuat(glm::vec3(0.0f, 1.0f, 0.0f), m_camera_orientation);
 	result = glm::lookAt(cameraPos, lookingAt, upVec);
 // unskip
@@ -139,7 +139,6 @@ glm::vec3 SimpleViewer::getPointOnUnitSphere(glm::vec2 p) {
 		y = _p.y / r;
 		z = 0;
 	}
-	std::cout << r << std::endl;
 	return glm::vec3(x, y, z);
 // unskip
 }

@@ -51,6 +51,9 @@ void Oblig3App::display() {
   // Activate the sahader
   m_shader_.Activate();
   // Bind the texture and bind it to the uniform in the shader
+  glBindTexture(GL_TEXTURE0, m_texture_.GetTextureId());
+  int location = glGetUniformLocation(GL_VERTEX_SHADER, "DiffuseTex");
+  glUniform1f(location, 0);
   // Set the value of the SpecularColor uniform in the FragmentShader
   //unskip
   
@@ -136,7 +139,7 @@ void Oblig3App::setupShaders() {
 void Oblig3App::setupLightParameters() {
   //Light atributes
   GLfloat black_light[] = {  0.0f,  0.0f,  0.0f,  1.0f };
-  GLfloat white_light[] = {  1.0f,  1.0f,  1.0f,  1.0f };
+  GLfloat white_light[] = {  1.0f,  0.0f,  1.0f,  1.0f };
   
   //Setup light 0
   glLightfv(GL_LIGHT0, GL_DIFFUSE,  white_light);
