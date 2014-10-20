@@ -26,10 +26,10 @@ void Texture::Load(const std::string &filename) {
   if(m_texture_id_ == 0) {
     // skip
     // Insert texture creation here
-    m_texture_id_ = gli::createTexture2D(filename);
+    //m_texture_id_ = gli::createTexture2D(filename);
     // Use gli::createTexture2D to load and create texture name and bind it
     // Set wrapping to repeat in both S and T directions
-    glBindTexture(GL_TEXTURE0, m_texture_id_);
+    //glBindTexture(GL_TEXTURE0, m_texture_id_);
     // Set linear interpolation for magnification and linear-mipmap-linear for minification
     // Construct mipmaps
     // unskip
