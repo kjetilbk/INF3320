@@ -76,7 +76,7 @@ class opengl_error : public std::runtime_error {
     out << "\n** Where:       " << file << " at line " << line;
     out << "\n** Description: " << str_desc;
     out << "\n** Hint:        " << str_hint;
-    
+	std::cout << out.str();
     return out.str();
   }
 };
