@@ -13,7 +13,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "OpenGLError.hpp"
+//#include "OpenGLError.hpp"
 #include "ReadTextfile.hpp"
 
 void Oblig3App::initGL() {
@@ -51,9 +51,10 @@ void Oblig3App::display() {
   // Activate the sahader
   m_shader_.Activate();
   // Bind the texture and bind it to the uniform in the shader
-  //glBindTexture(GL_TEXTURE0, m_texture_.GetTextureId());
-  //int location = glGetUniformLocation(GL_VERTEX_SHADER, "DiffuseTex");
-  //glUniform1f(location, 0);
+  glBindTexture(GL_TEXTURE_2D, m_texture_.GetTextureId());
+  GLint location = m_shader_.GetUniform("test");
+  glUniform1f(location, 256.0);
+  std::cout << location << std::endl;
   // Set the value of the SpecularColor uniform in the FragmentShader
   //unskip
   
@@ -69,7 +70,7 @@ void Oblig3App::display() {
   // m_viewer_.renderDebugGraphics();
 
   glutSwapBuffers();
-  CHECK_OPENGL;
+//  CHECK_OPENGL;
 }
 
 void Oblig3App::reshape(int w, int h) {

@@ -9,6 +9,8 @@
 #ifndef SIMPLEVIEWER_HEADER_H_
 #define SIMPLEVIEWER_HEADER_H_
 
+#define _USE_MATH_DEFINES
+
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>

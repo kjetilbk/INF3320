@@ -24,7 +24,7 @@
 // uniform gl_LightSourceParameters gl_LightSource[gl_MaxLights];
 
 uniform sampler2D DiffuseTex;
-
+varying float testy;
 uniform vec4 SpecularColor;
 
 varying vec3 VSPosition;
@@ -64,7 +64,7 @@ void main() {
 
   
   vec4 s = vec4(max(dot(normalVec, halfVec), 0.0));
-  vec4 specular = gl_LightSource[0].specular * pow(s, vec4(4.0));
+  vec4 specular = gl_LightSource[0].specular * pow(s, vec4(testy));
 
   
   gl_FragColor = ambient + diffuse + specular;
