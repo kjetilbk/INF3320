@@ -56,7 +56,7 @@ void Oblig3App::display() {
   glUniform1i(location, m_texture_.GetTextureId()-1);
   // Set the value of the SpecularColor uniform in the FragmentShader
   location = m_shader_.GetUniform("SpecularColor");
-  glUniform4f(location, 1.0f, 1.0f, 1.0f, 256.0f);
+  glUniform4f(location, 1.0f, 0.95f, 0.9f, 0.5f);
   //unskip
   
   // Render the sphere
