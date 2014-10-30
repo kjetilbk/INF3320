@@ -1,0 +1,5 @@
+Feedback - Obligatory assignment 3 - INF3320
+Student: kjetilbk
+Status: Approved
+--------------------------------------------
+Code compiles and program run as expected. Well done!
