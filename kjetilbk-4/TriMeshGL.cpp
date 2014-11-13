@@ -82,8 +82,10 @@ void TriMesh::computeNormals() {
     glm::vec3 accNormal = startTriangle->m_N_;
     int triangleCount = 1;
     for(HalfEdge* tempEdge = startEdge->getVtxRingNext(); tempEdge != startEdge; tempEdge = tempEdge->getVtxRingNext()){
-      accNormal += tempEdge->getTriangle()->m_N_;
-      triangleCount++;
+		if (tempEdge == NULL)
+			break;
+		accNormal += tempEdge->getTriangle()->m_N_;
+		triangleCount++;
     }
     glm::vec3 count = glm::vec3(triangleCount);
     m_nodes[i].m_N_ = accNormal/count;

@@ -192,7 +192,7 @@ struct TriMesh::Node {
   glm::vec3 m_pos_;  /// Position of vertex.
   glm::vec3 m_N_;    /// Vertex shading normal.
   HalfEdge* m_he_;   /// Leading half-edge.
-  int		index;	 /// Index of vertex.
+  int		index;	 /// Index of vertex. (Used in sqrt3-subdiv)
 
   size_t    m_ix_;
 };

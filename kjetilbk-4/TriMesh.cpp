@@ -194,7 +194,20 @@
       j = i;
     }
 
-
+	for (int i = 0; i < m_nodes.size(); i++){
+		HalfEdge* beginLead = m_nodes[i].getLeadingHalfEdge();
+		HalfEdge* tempLead = m_nodes[i].getLeadingHalfEdge();
+		while(true){
+			HalfEdge* rewindHe = tempLead->getVtxRingPrev();
+			if (rewindHe == NULL){
+				m_nodes[i].m_he_ = tempLead;
+				break;
+			}
+			else if (rewindHe == beginLead)
+				break;
+			tempLead = rewindHe;
+		}
+	}
 
   }
 
