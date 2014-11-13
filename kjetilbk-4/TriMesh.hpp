@@ -13,6 +13,7 @@
 #include <string>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <iostream>
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
@@ -174,7 +175,7 @@ struct TriMesh::Node {
   /** Constructor.
    *  \param p The geometric position of the node. */
   Node(const glm::vec3 &p)
-      : m_pos_(p), m_he_(NULL) {
+      : m_pos_(p), m_he_(NULL), index(-1) {
   }
 
   /** Returns one half-edge from the node, if node is on boundary,
@@ -191,6 +192,7 @@ struct TriMesh::Node {
   glm::vec3 m_pos_;  /// Position of vertex.
   glm::vec3 m_N_;    /// Vertex shading normal.
   HalfEdge* m_he_;   /// Leading half-edge.
+  int		index;	 /// Index of vertex.
 
   size_t    m_ix_;
 };
@@ -201,7 +203,7 @@ struct TriMesh::Triangle {
    * \param he One of the half-edges of this triangle.
    */
   Triangle(HalfEdge *he)
-      : m_he_(he) {
+      : m_he_(he), center_point_index(-1) {
   }
 
   /** Return node no ix from triangle.
@@ -220,10 +222,23 @@ struct TriMesh::Triangle {
     return m_he_;
   }
 
-  glm::vec3      m_N_;   /// Shading normal of triangle
-  HalfEdge*      m_he_;  /// One of the half-edges of this triangle.
+  /** Calculates center of triangle */
+  glm::vec3 calculateBarycenter(){
+	  return (getNode(0)->m_pos_ + getNode(1)->m_pos_ + getNode(2)->m_pos_) / glm::vec3(3);
+  }
+  /** Setting the index of the center of triangle.*/
+  void setCenter(int index){
+	  center_point_index = index;
+  }
+  /** Setting the index of the center of triangle.*/
+  int getCenter(){
+	  return center_point_index;
+  }
+
+  glm::vec3      m_N_;					/// Shading normal of triangle
+  HalfEdge*      m_he_;					/// One of the half-edges of this triangle.
   size_t         m_ix_;
-  glm::vec3      m_new;
+  int			 center_point_index;	/// Index of center point vertex.
 };
 
 }  // GfxUtil
