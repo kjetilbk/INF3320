@@ -1,0 +1,9 @@
+Hey!
+
+Bruker sqrt(3)-subdivision. For å gjøre det har jeg endra litt av prekoden. Det er ikke mye jeg har endra,
+men for å hente punkter jeg alt har regna ut har jeg lagt til referanser i nodene og halfedgene o.l. til nye
+utregna punkter.
+
+I tillegg har jeg lagt til en funksjon i Oblig4App.cpp/hpp for å bytte mellom debug mode og ikke(wireframe mode).
+
+Det er stort sett referanser til indices(konstruktør setter til -1fordi punktet ikke finnes ennå) som er lagt til.
