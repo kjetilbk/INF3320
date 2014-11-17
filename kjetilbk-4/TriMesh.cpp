@@ -213,7 +213,7 @@
 
   TriMesh* TriMesh::subdivide() {
   // Choose one call:
-  // return subdivideLoop();
+   //return subdivideLoop();
    return subdivideSqrt3();
     return 0;
   }

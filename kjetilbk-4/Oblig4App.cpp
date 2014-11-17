@@ -37,6 +37,7 @@ void Oblig4App::initGL() {
   setupBoundingBox(m_meshes_[0]->getBBoxMin(), m_meshes_[0]->getBBoxMax());
   
   m_current_level_ = 0;
+  wireframe = false;
   
   setupShaders();
   setupLightParameters();
@@ -72,13 +73,31 @@ void Oblig4App::display() {
   
   // Render the mesh
   setupMaterials();
+  if (wireframe){
+	  glDisable(GL_POLYGON_OFFSET_FILL);
+	  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  }
+  else{
+	  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	  glEnable(GL_POLYGON_OFFSET_FILL);
+	  glPolygonOffset(1, 1);
+  }
+
   m_meshes_[m_current_level_]->render();
+
   
   // Deactivate the shader
   m_shader_.Deactivate();
 
   glutSwapBuffers();
   CHECK_OPENGL;
+}
+
+void Oblig4App::toggleWireframe(){
+	if (wireframe)
+		wireframe = false;
+	else
+		wireframe = true;
 }
 
 void Oblig4App::reshape(int w, int h) {
@@ -91,6 +110,9 @@ void Oblig4App::keyboard(unsigned char key, int /*x*/, int /*y*/) {
     case 'q':
       std::exit(0);
       break;
+	case 'd':
+		toggleWireframe();
+		break;
     case '+':
       ++m_current_level_;
       if (m_current_level_ >= int(m_meshes_.size())) {

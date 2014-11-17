@@ -34,12 +34,14 @@ class Oblig4App : public GLApp {
   void setupLightParameters();
   void setupMaterials();
   void setupBoundingBox(const glm::vec3& low, const glm::vec3& high);
+  void toggleWireframe();
   
   GfxUtil::SimpleViewer m_viewer_;
   GfxUtil::Shader m_shader_;
   std::vector<GfxUtil::TriMesh*> m_meshes_;
   int m_current_level_;
   std::string m_filename;
+  bool wireframe;
 };
 
 #endif // OBLIG4APP_HEADER_H_
