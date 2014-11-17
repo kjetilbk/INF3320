@@ -22,7 +22,7 @@ namespace GfxUtil {
 TriMesh* TriMesh::subdivideLoop() {
   vector<glm::vec3> points;
   vector<int> indices;
-  for each (Triangle* t in m_triangles)
+  /*for each (Triangle* t in m_triangles)
   {
 	  points.push_back(glm::lerp(t->getNode(0)->m_pos_, t->getNode(1)->m_pos_, 0.5f));
 	  int pointA = points.size() - 1;
@@ -55,7 +55,7 @@ TriMesh* TriMesh::subdivideLoop() {
   //skip
   // Generate a new set of points and indices using the Loop subdivision scheme
   // unskip
-  
+  */
   return new TriMesh(points, indices);
 }
 

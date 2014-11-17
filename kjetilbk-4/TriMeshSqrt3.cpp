@@ -9,6 +9,7 @@
 
 #include "TriMesh.hpp"
 
+#include <cmath>
 #include <stdexcept>
 #include <vector>
 #include <glm/glm.hpp>
@@ -22,12 +23,12 @@ namespace GfxUtil {
 TriMesh* TriMesh::subdivideSqrt3() {
   vector<glm::vec3> points;
   vector<int> indices;
-
   for (int i = 0; i < m_nodes.size(); i++){
 	  HalfEdge* start_edge = m_nodes[i].getLeadingHalfEdge();
-
+	  int surroundingPoints = 0;
+	  glm::vec3 new_point = glm::vec3(0);
 	  points.push_back(m_nodes[i].m_pos_);	//Pushing node vertex to points.
-	  m_nodes[i].index = points.size() - 1; //Setting node index.
+  	  m_nodes[i].index = points.size() - 1; //Setting node index.
 	  HalfEdge* he = start_edge;
 	  do{
 		  int center_of_triangle;
@@ -78,11 +79,15 @@ TriMesh* TriMesh::subdivideSqrt3() {
 			  indices.push_back(center_of_twin_triangle);
 			  indices.push_back(center_of_triangle);  
 		  }
-
+		  surroundingPoints++;
+		  new_point += he->getDestinationNode()->m_pos_;
 		  he = he->getVtxRingNext();
 	  } while (he != start_edge);
-
+	  glm::vec3 beta = glm::vec3((4 - 2*cos(2*M_PI/surroundingPoints))/(9*surroundingPoints));
+	  new_point = (1 - surroundingPoints * beta.x)*m_nodes[i].m_pos_ + beta*new_point;
+	  points[m_nodes[i].index] = new_point;
   }
+
 
   // skip
   // Generate a new set of points and indices using the sqrt(3) subdivision scheme
